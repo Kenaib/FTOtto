@@ -35,5 +35,7 @@ include("SecondaryFunctions.jl")
 
 include("FTHA.jl")
 
+#CFTAS-iK
 
+include("cFTAS-iK.jl")
 end

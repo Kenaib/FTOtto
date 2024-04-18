@@ -1,5 +1,7 @@
 using .FTOtto
 
-A = FTOtto.Init_Parameters(N_motor = 5000, Padm = 90)
+A = FTOtto.Init_Parameters(ϕ = 0, Δt_comb = 0)
 
-ZBX = FTOtto.Initialization(A, (1, 1, 1))
+Init = FTOtto.Initialization(A, FTOtto.ϵ)
+
+FTOtto.FTHA(Init)

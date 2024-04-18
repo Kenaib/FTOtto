@@ -64,12 +64,6 @@ function u_esp_ii(ui, qi)
     return ui + qi
 end
 
-#### Função de convergência de temperatura. 
-
-function temp_u(uii, ui, Ti, cv)
-    return Tii = Ti + (uii - ui)/cv
-end
-
 ###Função de adição de calor do FTHA
 
 function y_FTHA(alpha, delta, theta)

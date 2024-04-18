@@ -31,23 +31,23 @@ function Initialization(InitialData::Dict, ϵ)
     DATA["L"] = DATA["R"] * DATA["rLR"]
     DATA["VPMS"] = DATA["Vdu"]/(DATA["rv"] - 1)
     DATA["VPMI"] = DATA["VPMS"] + DATA["Vdu"]
-    if DATA["Δt_c"] !isnothing
+    if DATA["Δt_c"] != nothing
         DATA["δ"] = DATA["ω"] * DATA["Δt_c"]
-    elseif DATA["Δt_c"] isnothing
+    elseif DATA["Δt_c"] == nothing
         DATA["δ"] = nothing
     end
     #Tabelas de propriedades cinéticas e termodinâmicas: 
     #Parâmetros do Çengel em 300 K (gás ideal): R => MA, cp => MA, cv => MA, m, n, A => kmol/m³, EaRu => K, Massa Molecular => kg/kmol, Entalpia de formação => kJ/kmol;
     DATA["PROPS"] = Dict{String, Any}(
-        "O2" => (0.2598, 0.918, 0.658, 31.999, 0), 
+        "O2" => (0.2598, 0.918, 0.658, nothing, nothing, nothing, nothing, 31.999, 0), 
         "C4H10" => (0.1433, 1.7164, 1.5734, 0.15, 1.6, 4.16*10^9, 15098, 58.124, -126150), 
         "C2H6" => (0.2765, 1.7662, 1.4897, 0.1, 1.65, 6.19*10^9, 15098, 30.070, -84680),
         "C2H4" => (0.2964, 1.5482, 1.2518, 0.1, 1.65, 1.12*10^10, 15098, 28.054, 52280), 
         "CH4" => (0.5182, 2.2537, 1.7354, -0.3, 1.3, 8.3*10^5, 15098, 16.043, -74850), 
         "C8H18" => (0.0729, 1.7113, 1.6385, 0.25, 1.5, 2.6*10^9, 15098, 114, -208450), 
         "C3H8" => (0.1885, 1.6794, 1.4909, 0.1, 1.65, 4.84*10^9, 15098, 44.097, -103850),
-        "CO2" => (0.1889, 0.846,  0.657, 44.01, -393520),
-        "H2O" => ( 0.4615, 1.8723,  1.4108, 18.015, -241820),
+        "CO2" => (0.1889, 0.846,  0.657, nothing, nothing, nothing, nothing, 44.01, -393520),
+        "H2O" => ( 0.4615, 1.8723,  1.4108, nothing, nothing, nothing, nothing, 18.015, -241820),
     )
     #Dados para cp = cp(T)
     DATA["TEMP_FUNCTION"] = Dict{String, Any}(
@@ -76,8 +76,8 @@ function Initialization(InitialData::Dict, ϵ)
     DATA["FLUID"]["[F]"] = DATA["FLUID"]["N_F"]/DATA["VPMI"] #kmol/m³
     DATA["FLUID"]["[O]"] = DATA["FLUID"]["N_O"]/DATA["VPMI"] #kmolm³
     DATA["FLUID"]["[F]_f"] = DATA["FLUID"]["[F]"]*InitialData["[F]_f"]
-    DATA["FLUID"]["MM_Ap"] = DATA["FLUID"]["y_F"]*DATA["PROPS"][DATA["FLUID"]["FLUID"]][8] + DATA["FLUID"]["y_O"]*DATA["PROPS"]["O2"][4]
-    DATA["FLUID"]["cp_Ap"] = DATA["FLUID"]["y_F"]*DATA["PROPS"][DATA["FLUID"]["FLUID"]][2]*DATA["PROPS"][DATA["FLUID"]["FLUID"]][8] + DATA["FLUID"]["y_O"]*DATA["PROPS"]["O2"][2]*DATA["PROPS"]["O2"][4] 
+    DATA["FLUID"]["MM_Ap"] = DATA["FLUID"]["y_F"]*DATA["PROPS"][DATA["FLUID"]["FLUID"]][8] + DATA["FLUID"]["y_O"]*DATA["PROPS"]["O2"][8]
+    DATA["FLUID"]["cp_Ap"] = DATA["FLUID"]["y_F"]*DATA["PROPS"][DATA["FLUID"]["FLUID"]][2]*DATA["PROPS"][DATA["FLUID"]["FLUID"]][8] + DATA["FLUID"]["y_O"]*DATA["PROPS"]["O2"][2]*DATA["PROPS"]["O2"][8] 
     DATA["FLUID"]["MODEL"] = nobleGasHeat(m_(DATA["FLUID"]["MM_Ap"], MO), cp(DATA["FLUID"]["cp_Ap"], MO), T_(DATA["T_adm"]), P_(DATA["P_adm"]))
     DATA["FLUID"]["MIXTURE"] = idealGas("Mixture", "Mixture", DATA["FLUID"]["MODEL"])
     DATA["FLUID"]["cv_Ap"] = cv(DATA["FLUID"]["MIXTURE"], MO)().val
@@ -93,8 +93,8 @@ function Initialization(InitialData::Dict, ϵ)
     DATA["FLUID"]["COMBUSTION"]["y_CO2"] = DATA["FLUID"]["COMBUSTION"]["N_CO2"]/DATA["FLUID"]["COMBUSTION"]["N_PR"]
     DATA["FLUID"]["COMBUSTION"]["y_H2O"] = DATA["FLUID"]["COMBUSTION"]["N_H2O"]/DATA["FLUID"]["COMBUSTION"]["N_PR"]
     DATA["FLUID"]["COMBUSTION"]["y_O2"] = DATA["FLUID"]["COMBUSTION"]["N_O2"]/DATA["FLUID"]["COMBUSTION"]["N_PR"]
-    DATA["FLUID"]["COMBUSTION"]["MM_PR"] = DATA["FLUID"]["COMBUSTION"]["y_CO2"]*DATA["PROPS"]["CO2"][4] + DATA["FLUID"]["COMBUSTION"]["y_H2O"]*DATA["PROPS"]["H2O"][4] + DATA["FLUID"]["COMBUSTION"]["y_O2"]*DATA["PROPS"]["O2"][4]
-    DATA["FLUID"]["COMBUSTION"]["cp_PR"] = DATA["FLUID"]["COMBUSTION"]["y_CO2"]*DATA["PROPS"]["CO2"][2]*DATA["PROPS"]["CO2"][4] + DATA["FLUID"]["COMBUSTION"]["y_H2O"]*DATA["PROPS"]["H2O"][2]*DATA["PROPS"]["H2O"][4] + DATA["FLUID"]["COMBUSTION"]["y_O2"]*DATA["PROPS"]["O2"][2]*DATA["PROPS"]["O2"][4]
+    DATA["FLUID"]["COMBUSTION"]["MM_PR"] = DATA["FLUID"]["COMBUSTION"]["y_CO2"]*DATA["PROPS"]["CO2"][8] + DATA["FLUID"]["COMBUSTION"]["y_H2O"]*DATA["PROPS"]["H2O"][8] + DATA["FLUID"]["COMBUSTION"]["y_O2"]*DATA["PROPS"]["O2"][8]
+    DATA["FLUID"]["COMBUSTION"]["cp_PR"] = DATA["FLUID"]["COMBUSTION"]["y_CO2"]*DATA["PROPS"]["CO2"][2]*DATA["PROPS"]["CO2"][8] + DATA["FLUID"]["COMBUSTION"]["y_H2O"]*DATA["PROPS"]["H2O"][2]*DATA["PROPS"]["H2O"][8] + DATA["FLUID"]["COMBUSTION"]["y_O2"]*DATA["PROPS"]["O2"][2]*DATA["PROPS"]["O2"][8]
     DATA["FLUID"]["COMBUSTION"]["PR_MODEL"] = nobleGasHeat(m_(DATA["FLUID"]["COMBUSTION"]["MM_PR"], MO), cp(DATA["FLUID"]["COMBUSTION"]["cp_PR"], MO), T_(DATA["T_adm"]), P_(DATA["P_adm"]))
     DATA["FLUID"]["COMBUSTION"]["PRODUCTS"] = idealGas("Products", "Products", DATA["FLUID"]["COMBUSTION"]["PR_MODEL"])
     #Inicializa a simulação: 
@@ -123,6 +123,9 @@ function Initialization(InitialData::Dict, ϵ)
     push!(SIMUL["u"], DATA["u0"])
     if DATA["MODELO"] == "FTAF" || DATA["MODELO"] == "PModel"
         SIMUL["u"][1] = DATA["FLUID"]["N_M"]*cv(DATA["FLUID"]["MIXTURE"], MO)().val*DATA["T_adm"]
+    elseif DATA["MODELO"] == "FTHA"
+        SIMUL["u"][1] = DATA["PROPS"][DATA["FLUID"]["FLUID"]][3]*DATA["T_adm"]
+        DATA["FLUID"]["FTHA_MODEL"] = idealGas("FTHA", "FTHA", nobleGasHeat(m_(DATA["PROPS"][DATA["FLUID"]["FLUID"]][8], MO), cp(DATA["PROPS"][DATA["FLUID"]["FLUID"]][2], MA), T_(DATA["T_adm"]), P_(DATA["P_adm"])))
     end
     push!(SIMUL["T"], DATA["T_adm"])
     push!(SIMUL["P"], DATA["P_adm"])
