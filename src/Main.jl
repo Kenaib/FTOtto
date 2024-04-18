@@ -25,10 +25,15 @@ include("Initialization.jl")
 ###Funções auxiliares secundárias
 
 include("Function_chem_time.jl")
+include("SecondaryFunctions.jl")
 
 ###Tupla de tolerâncias
 
 ϵ = (eps(1.0), eps(1.0), eps(1.0))
+
+###FTHA 
+
+include("FTHA.jl")
 
 
 end
