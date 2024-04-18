@@ -31,9 +31,9 @@ function Initialization(InitialData::Dict, ϵ)
     DATA["L"] = DATA["R"] * DATA["rLR"]
     DATA["VPMS"] = DATA["Vdu"]/(DATA["rv"] - 1)
     DATA["VPMI"] = DATA["VPMS"] + DATA["Vdu"]
-    if DATA["Δt_c"] != nothing
+    if DATA["Δt_c"] !isnothing
         DATA["δ"] = DATA["ω"] * DATA["Δt_c"]
-    elseif DATA["Δt_c"] == nothing
+    elseif DATA["Δt_c"] isnothing
         DATA["δ"] = nothing
     end
     #Tabelas de propriedades cinéticas e termodinâmicas: 

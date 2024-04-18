@@ -1,7 +1,7 @@
 #### Função de convergência de temperatura.
 using SymPy
 
-function T_conv(y, ΔU, T, VALIDATION = InitialData["Validation"])
+function T_conv(y, ΔU, T, VALIDATION = Init["INPUT"]["Validation"])
     if VALIDATION == "ON"
         return T + ΔU/Cv_m(y)
     else
