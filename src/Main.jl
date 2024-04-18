@@ -14,6 +14,14 @@ initialize_project("FTOtto_Sim"; authors="GB", force = true)
 
 include("InitialData_function.jl")
 
+###Funções auxiliares primárias
+
+include("PrimaryFunctions.jl")
+
+###Função de inicialização
+
+include("Initialization.jl")
+
 ###Tupla de tolerâncias
 
 ϵ = (eps(1.0), eps(1.0), eps(1.0))
