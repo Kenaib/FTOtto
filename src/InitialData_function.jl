@@ -26,16 +26,25 @@ function Init_Parameters(;r_LR = 1, r_compr = 12, Vol_des = 1667e-6, n_cil = 6, 
     InitialData["Y_FRAC"] = Y_FRAC
     InitialData["Validation"] = Validation
     InitialData["Reversible"] = Rev
-
-    if InitialData["Fluido"] == "CH4"
-        InitialData["n_C"] = 1
-        InitialData["n_H"] = parse(Int64, InitialData["Fluido"][end])
-    else
-        InitialData["n_C"] = parse(Int64, InitialData["Fluido"][2])
-        if InitialData["Fluido"][end-2] == 'H'
-            InitialData["n_H"] = parse(Int64, InitialData["Fluido"][end-1:end])
-        else
+    if InitialData["MODELOS"] == "FTHA" && InitialData["Δt_comb"] == nothing
+        @warn "FTHA doesn't work with combustion duration time equals nothing. Change Δt_comb to a Float!"
+    end
+    if InitialData["Δt_comb"] == 0
+        @warn "This combustion duration time only works for FTHA! Thus, your new model is FTHA!"
+        InitialData["MODELOS"] = "FTHA"
+    end
+    
+    if InitialData["MODELOS"] != FTHA
+        if InitialData["Fluido"] == "CH4"
+            InitialData["n_C"] = 1
             InitialData["n_H"] = parse(Int64, InitialData["Fluido"][end])
+        else
+            InitialData["n_C"] = parse(Int64, InitialData["Fluido"][2])
+            if InitialData["Fluido"][end-2] == 'H'
+                InitialData["n_H"] = parse(Int64, InitialData["Fluido"][end-1:end])
+            else
+                InitialData["n_H"] = parse(Int64, InitialData["Fluido"][end])
+            end
         end
     end
 

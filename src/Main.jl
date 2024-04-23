@@ -38,4 +38,9 @@ include("FTHA.jl")
 #Algoritmo de finalização
 
 include("FinalAlg.jl")
+
+###Testes
+
+#include("CodeTests.jl")
+
 end
