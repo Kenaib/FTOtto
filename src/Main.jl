@@ -35,6 +35,11 @@ include("SecondaryFunctions.jl")
 
 include("FTHA.jl")
 
+###cFTAS-iK
+
+include("cFTAS-iK.jl")
+
+
 #Algoritmo de finalização
 
 include("FinalAlg.jl")
@@ -42,5 +47,6 @@ include("FinalAlg.jl")
 ###Testes
 
 include("CodeTests.jl")
+include("Teste_chem_time.jl")
 
 end

@@ -1,11 +1,8 @@
 using .FTOtto
 
-A = FTOtto.Init_Parameters(MODELOS = "FTHA", Δt_comb = 8.33e-7, Fluido = "O2")
+A = FTOtto.Init_Parameters(r_compr = 16, MODELOS = "FTAS", Δt_comb = nothing, Fluido = "O2", ϕ = 0.0625)
 
 B = FTOtto.Initialization(A, FTOtto.ϵ)
 
-FTOtto.FTHA(B)
-
-FTOtto.RESULTS(B, TABLE = "ON")
-
-B["INPUT"]["rv"]
+FTOtto.TESTE(B)
+B["INPUT"]
