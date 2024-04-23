@@ -41,6 +41,6 @@ include("FinalAlg.jl")
 
 ###Testes
 
-#include("CodeTests.jl")
+include("CodeTests.jl")
 
 end

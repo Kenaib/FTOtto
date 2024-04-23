@@ -26,7 +26,7 @@ function RESULTS(Init::Dict; TABLE = "OFF")
         "q_in" => positive_value(Init["SIMUL"]["q"]),
         "q_out" => -negative_value(Init["SIMUL"]["q"])
     )
-    MAIN_RESULTS["w_net"] = MAIN_RESULTS["w_in"] - MAIN_RESULTS["w_out"]
+    MAIN_RESULTS["w_net"] = MAIN_RESULTS["w_out"] - MAIN_RESULTS["w_in"]
     MAIN_RESULTS["η_t"] = MAIN_RESULTS["w_net"]/MAIN_RESULTS["q_in"]
     MAIN_RESULTS["rct"] = MAIN_RESULTS["w_in"]/MAIN_RESULTS["w_out"]
     if TABLE == "OFF"

@@ -3,7 +3,7 @@ function FTHA(Init::Dict)
     q_iii = [q_in_i(Init["INPUT"]["q_in"], y_iii[i+1], y_iii[i]) for i in 1:length(y_iii)-1]
     for i in 1:length(Init["SIMUL"]["α"])-1
         if abs(Init["SIMUL"]["𝕧"][i] - Init["SIMUL"]["𝕧"][i+1]) <= Init["TOL"]["ϵ_v"]
-            push!(Init["SIMUL"]["u"], u_esp_ii(u_T(Init, Init["SIMUL"]["T"][i]), q_iii[i]))
+            push!(Init["SIMUL"]["u"], u_esp_ii(u_T(Init, Init["SIMUL"]["T"][i]), q_iii[i])) #ERRO!
             push!(Init["SIMUL"]["T"], temp_u_FTHA(Init, Init["SIMUL"]["u"][end], Init["SIMUL"]["u"][end-1], Init["SIMUL"]["T"][end]))
             push!(Init["SIMUL"]["P"], press_u_FTHA(Init, Init["SIMUL"]["T"][end], Init["SIMUL"]["𝕧"][i]))
             push!(Init["SIMUL"]["n"], 0)
@@ -44,3 +44,5 @@ function FTHA(Init::Dict)
     end
 
 end
+
+#Já validado!
