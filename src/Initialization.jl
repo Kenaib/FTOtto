@@ -123,9 +123,9 @@ function Initialization(InitialData::Dict, ϵ)
     push!(SIMUL["u"], DATA["u0"])
     if DATA["MODELO"] == "FTAF" || DATA["MODELO"] == "PModel"
         SIMUL["u"][1] = DATA["FLUID"]["N_M"]*cv(DATA["FLUID"]["MIXTURE"], MO)().val*DATA["T_adm"]
-    elseif DATA["MODELO"] == "FTHA"
+    elseif DATA["MODELO"] == "FTHA" || DATA["Δt_c"] == 0
         SIMUL["u"][1] = DATA["PROPS"][DATA["FLUID"]["FLUID"]][3]*DATA["T_adm"]
-        DATA["FLUID"]["FTHA_MODEL"] = idealGas("FTHA", "FTHA", nobleGasHeat(m_(DATA["PROPS"][DATA["FLUID"]["FLUID"]][8], MO), cp(DATA["PROPS"][DATA["FLUID"]["FLUID"]][2], MA), T_(DATA["T_adm"]), P_(DATA["P_adm"])))
+        DATA["FLUID"]["FTHA_MODEL"] = idealGas("FTHA", "FTHA", nobleGasHeat(m_(DATA["PROPS"][DATA["FLUID"]["FLUID"]][8], MO), cp(DATA["PROPS"][DATA["FLUID"]["FLUID"]][2]*DATA["PROPS"][DATA["FLUID"]["FLUID"]][8], MO), T_(DATA["T_adm"]), P_(DATA["P_adm"])))
     end
     push!(SIMUL["T"], DATA["T_adm"])
     push!(SIMUL["P"], DATA["P_adm"])

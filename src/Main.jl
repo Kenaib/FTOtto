@@ -35,7 +35,7 @@ include("SecondaryFunctions.jl")
 
 include("FTHA.jl")
 
-#CFTAS-iK
+#Algoritmo de finalização
 
-include("cFTAS-iK.jl")
+include("FinalAlg.jl")
 end
