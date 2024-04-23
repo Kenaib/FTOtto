@@ -18,7 +18,7 @@ function negative_value(some_list)
     return x
 end
 
-function RESULTS(Init::Dict, TABLE = "OFF")
+function RESULTS(Init::Dict; TABLE = "OFF")
     MAIN_RESULTS = Dict{String, Any}(
         "PARAMETERS" => Init["SIMUL"],
         "w_in" => positive_value(Init["SIMUL"]["w"]),
