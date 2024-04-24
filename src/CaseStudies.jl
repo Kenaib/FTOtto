@@ -1,3 +1,1 @@
 using .FTOtto
-
-FTOtto.SayHello()
