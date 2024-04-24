@@ -45,3 +45,32 @@ function y_alpha(Init:: Dict, alpha; F_Conc_i = 0)
         return (F_Conc_0 - F_Conc_i)/F_Conc_0
     end
 end
+
+#FTAF
+
+function Q_j(Init::Dict, yii, yi)
+    N_F = Init["INPUT"]["FLUID"]["N_F"]
+    N_CO2 = Init["INPUT"]["FLUID"]["COMBUSTION"]["N_CO2"]
+    N_H2O = Init["INPUT"]["FLUID"]["COMBUSTION"]["N_H2O"]
+    q_in = Init["INPUT"]["q_in"]*Init["INPUT"]["FLUID"]["MM_Ap"]*Init["INPUT"]["FLUID"]["N_M"]
+    hFF = Init["INPUT"]["PROPS"][Init["INPUT"]["FLUID"]["FLUID"]][9]
+    hFCO2 = Init["INPUT"]["PROPS"]["CO2"][9]
+    hFH2O = Init["INPUT"]["PROPS"]["H2O"][9]
+    return (1-yi)*N_F*hFF + yi*(N_CO2*hFCO2 + N_H2O*hFH2O) - ((1-yii)*N_F*hFF + yii*(N_CO2*hFCO2 + N_H2O*hFH2O)) + q_in*(yii - yi)
+end
+
+function Cv_m(Init::Dict, y)
+    cv_Re = cv(Init["INPUT"]["FLUID"]["COMBUSTION"]["REAGENTS"], MO)().val
+    cv_Pr = cv(Init["INPUT"]["FLUID"]["COMBUSTION"]["PRODUCTS"], MO)().val
+    N_M = Init["INPUT"]["FLUID"]["N_M"]
+    N_PR = Init["INPUT"]["FLUID"]["COMBUSTION"]["N_PR"]
+    return (1-y)*N_M*cv_Re + y*N_PR*cv_Pr
+end
+
+function T_Arc(U, Cvm)
+    return U/Cvm
+end
+
+function P_Arc(Init::Dict, y, T, V)
+    return (1-y)*Init["INPUT"]["FLUID"]["N_M"]*R_()().val*T/V + y*Init["INPUT"]["FLUID"]["COMBUSTION"]["N_PR"]*R_()().val*T/V
+end

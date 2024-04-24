@@ -39,6 +39,9 @@ include("FTHA.jl")
 
 include("cFTAS-iK.jl")
 
+###cFTAF-iK
+
+include("cFTAF-iK.jl")
 
 #Algoritmo de finalização
 
