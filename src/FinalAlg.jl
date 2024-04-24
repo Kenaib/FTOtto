@@ -42,3 +42,28 @@ function RESULTS(Init::Dict; TABLE = "OFF")
     end
 end
 
+function ThermoPlots(Init::Dict, PlotType, Init2 = nothing)
+    if PlotType == "P-v"
+        a = plot(Init["SIMUL"]["𝕧"], Init["SIMUL"]["P"], label = Init["INPUT"]["MODELO"])
+        if Init2 != nothing
+            return plot!(a, Init2["SIMUL"]["𝕧"], Init2["SIMUL"]["P"], label = Init2["INPUT"]["MODELO"], (:triangle, 5, 0.6), every = 2)
+        end
+        return a
+    end
+    if PlotType == "T-v"
+        b = plot(Init["SIMUL"]["𝕧"], Init["SIMUL"]["T"], label = Init["INPUT"]["MODELO"])
+        if Init2 != nothing
+            return plot!(b, Init2["SIMUL"]["𝕧"], Init2["SIMUL"]["T"], label = Init2["INPUT"]["MODELO"], (:triangle, 5, 0.6), every = 2)
+        end
+        return b
+    end
+    if PlotType == "P-α"
+        c = plot(Init["SIMUL"]["α"], Init["SIMUL"]["P"], label = Init["INPUT"]["MODELO"])
+        if Init2 != nothing
+            return plot!(c, Init2["SIMUL"]["α"], Init2["SIMUL"]["P"], label = Init2["INPUT"]["MODELO"], marker = (:triangle, 5, 0.6), every = 2)
+        end
+        return c
+    end
+end
+
+

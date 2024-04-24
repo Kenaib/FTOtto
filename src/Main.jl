@@ -8,8 +8,12 @@ using DataFrames
 using PrettyTables
 
 ###Setup DrWatson.jl
-initialize_project("FTOtto_Sim"; authors="GB", force = true)
+initialize_project("FTOtto_SIMULATION"; authors="GB", force = true)
 
+function SAVE_SIM(;Init_Data::Dict, Results::Dict, Name = nothing)
+    wsave(datadir("SIMULATION_INITIAL_DATA", savename(Name, "jld2")), Init_Data)
+    wsave(datadir("SIMULATION_RESULTS", savename("R_", Name, "jld2")), Results)
+end
 ###Função de dados iniciais 
 
 include("InitialData_function.jl")
