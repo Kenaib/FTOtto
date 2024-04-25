@@ -11,9 +11,14 @@ using PrettyTables
 initialize_project("FTOtto_SIMULATION"; authors="GB", force = true)
 
 function SAVE_SIM(;Init_Data::Dict, Results::Dict, Name = nothing)
-    wsave(datadir("SIMULATION_INITIAL_DATA", savename(Name, "jld2")), Init_Data)
-    wsave(datadir("SIMULATION_RESULTS", savename("R_", Name, "jld2")), Results)
+    safesave(datadir("SIMULATION_INITIAL_DATA", savename(Name, "jld2")), Init_Data)
+    safesave(datadir("SIMULATION_RESULTS", savename("R_", Name, "jld2")), Results)
 end
+
+function SAVE_PLOTS(;Plot_name::AbstractString, Plot)
+    safesave(plotsdir("FTOtto_Plots", Plot_name*".png"), Plot)
+end
+
 ###Função de dados iniciais 
 
 include("InitialData_function.jl")
@@ -53,7 +58,10 @@ include("FinalAlg.jl")
 
 ###Testes
 
+
 include("CodeTests.jl")
 include("Teste_chem_time.jl")
+
+
 
 end
