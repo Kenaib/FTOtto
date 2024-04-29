@@ -56,6 +56,10 @@ include("cFTAS-aK.jl")
 
 include("cFTAF-iK.jl")
 
+###cFTAF-aK
+
+include("cFTAF-aK.jl")
+
 #Algoritmo de finalização
 
 include("FinalAlg.jl")

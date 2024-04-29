@@ -28,7 +28,6 @@ function cFTASak(Init::Dict)
             n_ii = Float64[]
             T_ii  = Float64[]
             P_ii = Float64[]
-            F_ii = Float64[]
             u_ii = Float64[]
             push!(n_ii, Init["INPUT"]["FLUID"]["γ_Ap"])
             push!(w_ii, work(Init["SIMUL"]["P"][i], Init["SIMUL"]["𝕧"][i], n_ii[end], Init["SIMUL"]["𝕧"][i+1])) 
