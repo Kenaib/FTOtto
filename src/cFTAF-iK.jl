@@ -1,8 +1,8 @@
 function cFTAFik(Init::Dict)
     if Init["INPUT"]["MODELO"] != "FTAF"
-        @warn "Select FTAF model!"
+        @error "Select FTAF model!"
         if Init["INPUT"]["Y_FRAC"] != "iK"
-            @warn "Select ignition chemical kinetics (iK)!"
+            @error "Select ignition chemical kinetics (iK)!"
             return nothing
         end
         return nothing

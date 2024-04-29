@@ -48,6 +48,10 @@ include("FTHA.jl")
 
 include("cFTAS-iK.jl")
 
+###cFTAS-aK
+
+include("cFTAS-aK.jl")
+
 ###cFTAF-iK
 
 include("cFTAF-iK.jl")
