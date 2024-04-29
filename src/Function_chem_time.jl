@@ -10,9 +10,9 @@ function chem_time(Init::Dict, w; aKConc = "ON", IgnStart = "OFF")
     A = Init["INPUT"]["PROPS"][Init["INPUT"]["FLUID"]["FLUID"]][6]
     EaRu = Init["INPUT"]["PROPS"][Init["INPUT"]["FLUID"]["FLUID"]][7]
     Δt = Init["SIMUL"]["Δ𝕥"]
-    T = Init["SIMUL"]["T"][w+1]
     
     if Init["INPUT"]["Y_FRAC"] == "iK"
+        T = Init["SIMUL"]["T"][w]
         x(F, p, t) = -A*exp(-EaRu/T)*F^m*(O0 - 1/(λ*ϕ)*(F0 - F))^n
         tspan = (0, 1/(Init["INPUT"]["N"]/60))
         OBJ = Init["INPUT"]["FLUID"]["[F]_f"]
@@ -20,7 +20,7 @@ function chem_time(Init::Dict, w; aKConc = "ON", IgnStart = "OFF")
         return [sol.t[i] for i in 1:length(sol.u) if abs(sol.u[i] - OBJ) <= 1e-6][1] #Retorna o tempo mínimo que satisfaz a condição.
     
     elseif Init["INPUT"]["Y_FRAC"] == "aK"
-        
+        T = Init["SIMUL"]["T"][w+1]
         if IgnStart == "OFF"
             
             if aKConc == "ON"

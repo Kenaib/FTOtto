@@ -1,15 +1,13 @@
 using .FTOtto
 
-A = FTOtto.Init_Parameters(r_compr = 21, MODELOS = "FTAF", Δt_comb = nothing, Fluido = "O2", ϕ = 0.001, Final_Conc = 1/128)
+A = FTOtto.Init_Parameters(r_compr = 14, MODELOS = "FTAS", Fluido = "O2", ϕ = 0.1, Half_lifes = 7, Y_FRAC = "aK", α = 0.1, q_ent = 1000)
 
 B = FTOtto.Initialization(A, FTOtto.ϵ)
 
-FTOtto.cFTAFik(B)
+FTOtto.cFTASak(B)
 
-FTOtto.RESULTS(B)["PARAMETERS"]["T"]
+RES1 = FTOtto.RESULTS(B)
 
-list_Conc = [FTOtto.chem_time_TESTES3(B, i, IgnStart = "ON") for i in 1:3600]
-print(list_Conc)
-
+print(RES1["PARAMETERS"]["y"])
 
 

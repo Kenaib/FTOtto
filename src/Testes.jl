@@ -1,7 +1,7 @@
 using .FTOtto
 using Plots
 
-A = FTOtto.Init_Parameters(r_compr = 21, MODELOS = "FTAS", Δt_comb = nothing, Fluido = "O2", ϕ = 0.001, Final_Conc = 1/128)
+A = FTOtto.Init_Parameters(r_compr = 21, MODELOS = "FTAS", Δt_comb = nothing, Fluido = "O2", ϕ = 0.001, Half_lifes = 7)
 
 B = FTOtto.Initialization(A, FTOtto.ϵ)
 

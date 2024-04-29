@@ -21,6 +21,7 @@ end
 function RESULTS(Init::Dict)
 
     MAIN_RESULTS = Dict{String, Any}(
+        "DATA" => Init["INPUT"],
         "PARAMETERS" => Init["SIMUL"],
         "w_in" => positive_value(Init["SIMUL"]["w"]),
         "w_out" => -negative_value(Init["SIMUL"]["w"]),
@@ -60,29 +61,21 @@ function ThermoPlots(Init::Dict, PlotType, Init2 = nothing)
 end
 
 function TABLES(Init::Dict, Init2 = nothing, Init3 = nothing, Init4 = nothing)
-    df = DataFrame(PARAMS = ["Eficiência térmica de primeira Lei", "Calor que entra", "Trabalho líquido", "Razão de consumo de trabalho"], B = [Init["η_t"]*100, Init["q_in"], Init["w_net"], Init["rct"]], C = [Init2["η_t"]*100, Init2["q_in"], Init2["w_net"], Init2["rct"]], D = [Init3["η_t"]*100, Init3["q_in"], Init3["w_net"], Init3["rct"]], E = [Init4["η_t"]*100, Init4["q_in"], Init4["w_net"], Init4["rct"]])
-    rename!(df, :B => Init["INPUT"]["MODELO"]*"-"*Init["INPUT"]["Y_FRAC"])
-    rename!(df, :C => Init2["INPUT"]["MODELO"]*"-"*Init2["INPUT"]["Y_FRAC"])
-    rename!(df, :D => Init3["INPUT"]["MODELO"]*"-"*Init3["INPUT"]["Y_FRAC"])
-    rename!(df, :E => Init4["INPUT"]["MODELO"]*"-"*Init4["INPUT"]["Y_FRAC"])
+   
+    df = DataFrame(PARAMS = ["Eficiência térmica de primeira Lei", "Calor que entra", "Trabalho líquido", "Razão de consumo de trabalho"])
+
     
-    if Init["INPUT"]["MODELO"] == "FTHA"
-        rename!(df, :B => Init["INPUT"]["MODELO"])
-    end
+    inputs = [(Init, :B), (Init2, :C), (Init3, :D), (Init4, :E)]
 
-    if Init2["INPUT"]["MODELO"] == "FTHA"
-        rename!(df, :C => Init2["INPUT"]["MODELO"])
-    end
+    for (input, col_name) in inputs
 
-    if Init3["INPUT"]["MODELO"] == "FTHA"
-        rename!(df, :D => Init3["INPUT"]["MODELO"])
-    end
+        if !isnothing(input)
+            df[!, col_name] = [input["η_t"]*100, input["q_in"], input["w_net"], input["rct"]*100]
+            rename!(df, col_name => input["DATA"]["MODELO"] * (input["DATA"]["MODELO"] == "FTHA" ? "" : "-" * input["DATA"]["Y_FRAC"]))
+        end
 
-    if Init4["INPUT"]["MODELO"] == "FTHA"
-        rename!(df, :E => Init4["INPUT"]["MODELO"])
     end
 
     return pretty_table(df, show_row_number = false)
-
 end
 
