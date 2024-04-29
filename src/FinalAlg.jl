@@ -30,16 +30,20 @@ function RESULTS(Init::Dict; TABLE = "OFF")
     MAIN_RESULTS["η_t"] = MAIN_RESULTS["w_net"]/MAIN_RESULTS["q_in"]
     MAIN_RESULTS["rct"] = MAIN_RESULTS["w_in"]/MAIN_RESULTS["w_out"]
     df = DataFrame(PARAMS = ["Eficiência térmica de primeira Lei", "Calor que entra", "Trabalho líquido"], B = [MAIN_RESULTS["η_t"]*100, MAIN_RESULTS["q_in"], MAIN_RESULTS["w_net"]])
-    if Init["INPUT"]["MODELO"] != "FTHA" && Init["INPUT"]["Δt_c"] == 0
-        rename!(df, :B => "FTHA")
+    
+    if Init["INPUT"]["MODELO"] != "FTHA"
+        rename!(df, :B => Init["INPUT"]["MODELO"]*"-"*Init["INPUT"]["Y_FRAC"])
     else
         rename!(df, :B => Init["INPUT"]["MODELO"])
     end
+    
     if TABLE == "OFF"
         return MAIN_RESULTS
+
     elseif TABLE == "ON"
         return pretty_table(df, show_row_number = false)
     end
+
 end
 
 function ThermoPlots(Init::Dict, PlotType, Init2 = nothing)

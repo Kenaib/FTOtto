@@ -20,7 +20,8 @@ function Initialization(InitialData::Dict, ϵ)
     "Y_FRAC" => InitialData["Y_FRAC"],
     "VALIDATION" => InitialData["Validation"],
     "REVERSIBILITY" => InitialData["Reversible"],
-    "Malha" => InitialData["α"]
+    "Malha" => InitialData["α"],
+    "aKIgn" => InitialData["aKIgnS"]
     )
     #Parâmetros geométricos: 
     DATA["Vdu"] = DATA["Vd"]/DATA["z"]

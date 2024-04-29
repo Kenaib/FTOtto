@@ -19,7 +19,7 @@ function cFTASak(Init::Dict)
             push!(Init["SIMUL"]["P"], press_u(Init, Init["SIMUL"]["T"][end], Init["SIMUL"]["𝕧"][i]))
             push!(Init["SIMUL"]["w"], 0)
             push!(Init["SIMUL"]["n"], 0)
-            push!(Init["SIMUL"]["𝔽"], chem_time(Init, i, IgnStart = "ON"))
+            push!(Init["SIMUL"]["𝔽"], chem_time(Init, i, IgnStart = Init["INPUT"]["aKIgn"]))
             
         else
             j = 0
@@ -53,16 +53,16 @@ function cFTASak(Init::Dict)
             push!(Init["SIMUL"]["u"], u_ii[end])
             push!(Init["SIMUL"]["T"], T_ii[end])
             push!(Init["SIMUL"]["P"], P_ii[end])
-            push!(Init["SIMUL"]["𝔽"], chem_time(Init, i, IgnStart = "ON"))
+            push!(Init["SIMUL"]["𝔽"], chem_time(Init, i, IgnStart = Init["INPUT"]["aKIgn"]))
             
         end
     
     end
 
-    if chem_time(Init, 1, aKConc = "OFF", IgnStart = "ON") == nothing
+    if chem_time(Init, 1, aKConc = "OFF", IgnStart = Init["INPUT"]["aKIgn"]) == nothing
         Init["INPUT"]["Δt_c"] = 0
     else
-        Init["INPUT"]["Δt_c"] = chem_time(Init, 1, aKConc = "OFF", IgnStart = "ON")
+        Init["INPUT"]["Δt_c"] = chem_time(Init, 1, aKConc = "OFF", IgnStart = Init["INPUT"]["aKIgn"])
     end
 
 end

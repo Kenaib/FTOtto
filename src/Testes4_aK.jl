@@ -6,4 +6,4 @@ B = FTOtto.Initialization(A, FTOtto.ϵ)
 
 FTOtto.cFTASak(B)
 
-B["INPUT"]
+FTOtto.RESULTS(B, TABLE = "ON")
