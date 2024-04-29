@@ -31,12 +31,13 @@ function y_alpha(Init:: Dict, alpha; F_Conc_i = 0)
     Δt = Init["INPUT"]["Δt_c"]
     delta = Init["INPUT"]["δ"]
     F_Conc_0 = Init["SIMUL"]["𝔽"][1]
+    HL = Init["INPUT"]["HaL"]
     if Init["INPUT"]["Y_FRAC"] == "iK"
         if alpha < theta
             return 0
         elseif Δt != nothing 
             if alpha >= theta && alpha <= theta + delta
-                return 1 - 1/2^(7/delta*(alpha - theta))
+                return 1 - 1/2^(HL/delta*(alpha - theta))
             elseif alpha >= theta + delta
                 return 1
             end

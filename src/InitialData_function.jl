@@ -2,7 +2,7 @@ using IdealGasLib
 
 function Init_Parameters(;r_LR = 3.7, r_compr = 14, Vol_des = 1667e-6, n_cil = 6, θ_ign = -0.005, Δt_comb = nothing, 
     rD_S = 1, N_motor = 2000, q_ent = 1000, α_minimo = -180, α_maximo = 180, α = 0.1, Tadm = 30, Padm = P_()().val, 
-    Fluido = "C4H10", ϕ = 0.0, Final_Conc = 1/128, MODELOS = "FTAS", COND = "c", Y_FRAC = "iK", Rev = "R", Validation = "OFF", aKIgn = "ON")
+    Fluido = "C4H10", ϕ = 0.0, Half_lifes = 7, MODELOS = "FTAS", COND = "c", Y_FRAC = "iK", Rev = "R", Validation = "OFF", aKIgn = "ON")
     InitialData = Dict{String, Any}()
     InitialData["r_LR"] = r_LR
     InitialData["r_compr"] = r_compr
@@ -20,7 +20,8 @@ function Init_Parameters(;r_LR = 3.7, r_compr = 14, Vol_des = 1667e-6, n_cil = 6
     InitialData["Padm"] = Padm
     InitialData["Fluido"] = Fluido
     InitialData["ϕ"] = ϕ
-    InitialData["[F]_f"] = Final_Conc
+    InitialData["Half_lifes"] = Half_lifes
+    InitialData["[F]_f"] = 1/2^Half_lifes
     InitialData["MODELOS"] = MODELOS
     InitialData["COND"] = COND
     InitialData["Y_FRAC"] = Y_FRAC

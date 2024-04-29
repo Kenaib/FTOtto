@@ -21,7 +21,8 @@ function Initialization(InitialData::Dict, ϵ)
     "VALIDATION" => InitialData["Validation"],
     "REVERSIBILITY" => InitialData["Reversible"],
     "Malha" => InitialData["α"],
-    "aKIgn" => InitialData["aKIgnS"]
+    "aKIgn" => InitialData["aKIgnS"],
+    "HaL" => InitialData["Half_lifes"]
     )
     #Parâmetros geométricos: 
     DATA["Vdu"] = DATA["Vd"]/DATA["z"]
