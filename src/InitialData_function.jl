@@ -38,7 +38,7 @@ function Init_Parameters(;r_LR = 3.7, r_compr = 14, Vol_des = 1667e-6, n_cil = 6
         InitialData["Δt_comb"] = nothing
     end
 
-    if InitialData["MODELOS"] != "FTHA"
+    if InitialData["MODELOS"] != "FTHA" && (InitialData["Fluido"] == "O2" || InitialData["Fluido"] == "CO2")
         @warn "Changing work fluid to default (C4H10)!"
         InitialData["Fluido"] = "C4H10"
     end

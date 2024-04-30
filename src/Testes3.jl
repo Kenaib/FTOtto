@@ -9,9 +9,16 @@ FTOtto.cFTASik(B)
 
 RES1 = FTOtto.RESULTS(B)
 
-Plot1 = FTOtto.ThermoPlots(B, "y-α")
+X = FTOtto.Init_Parameters(r_compr = 25, MODELOS = "FTAS", Fluido = "CH4", ϕ = 0.0625, Half_lifes = 10, Y_FRAC = "aK", α = 0.1, q_ent = 1000)
 
-FTOtto.SAVE_PLOTS(Plot_name = "4", Plot = Plot1)
+Y = FTOtto.Initialization(X, FTOtto.ϵ)
 
+FTOtto.cFTASak(Y)
+
+RES2 = FTOtto.RESULTS(Y)
+
+Plot1 = FTOtto.ThermoPlots(B, "y-α", Y)
+
+FTOtto.SAVE_PLOTS(Plot_name = "y-α-Teste", Plot = Plot1)
 
 
