@@ -1,14 +1,18 @@
 using .FTOtto
 
-A = FTOtto.Init_Parameters(r_compr = 21, MODELOS = "FTAS", Δt_comb = nothing, Fluido = "O2", ϕ = 0.001, Half_lifes = 7)
+using .FTOtto
+
+A = FTOtto.Init_Parameters(r_compr = 18, MODELOS = "FTAF", Fluido = "O2", ϕ = 0.0625, Half_lifes = 10, Y_FRAC = "aK", α = 0.1)
 
 B = FTOtto.Initialization(A, FTOtto.ϵ)
 
-FTOtto.cFTASik(B)
+FTOtto.cFTAFak(B)
 
-FTOtto.RESULTS(B)
+RES1 = FTOtto.RESULTS(B)
+
+FTOtto.ThermoPlots(B, "y-α")
 
 #FTOtto.SAVE_SIM(Init_Data = A, Results = B, Name = (r_compr = 21, MODELOS = "FTAF", Δt_comb = nothing, Fluido = "O2", ϕ = 0.001, Final_Conc = 1/128))
 #FTOtto.SAVE_SIM(Init_Data = C, Results = D, Name = (r_compr = 21, MODELOS = "FTHA", Δt_comb = 2.2067730317404524e-5, Fluido = "O2"))
 
-#FTOtto.SAVE_PLOTS(Plot_name = "P-α", Plot = FTOtto.ThermoPlots(D, "T-v", B))
+FTOtto.TABLES(RES1)

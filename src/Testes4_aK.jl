@@ -1,6 +1,6 @@
 using .FTOtto
 
-A = FTOtto.Init_Parameters(r_compr = 14, MODELOS = "FTAF", Fluido = "O2", ϕ = 0.001, Half_lifes = 7, Y_FRAC = "aK", α = 0.1)
+A = FTOtto.Init_Parameters(r_compr = 18, MODELOS = "FTAF", Fluido = "O2", ϕ = 0.0625, Half_lifes = 10, Y_FRAC = "aK", α = 0.1)
 
 B = FTOtto.Initialization(A, FTOtto.ϵ)
 

@@ -58,6 +58,28 @@ function ThermoPlots(Init::Dict, PlotType, Init2 = nothing)
         end
         return c
     end
+    if PlotType == "y-α"
+        x = Init["SIMUL"]["α"][1:3600]
+        y = Init["SIMUL"]["y"]
+
+        y_half = [1 - 1/2^n for n in 1:Init["INPUT"]["HaL"]]
+
+        x_half = [x[findmin(abs.(y .- i))[2]] for i in y_half]
+
+        x_θ = [x[i] for i in 1:length(x) if abs(x[i] - Init["INPUT"]["θ"]) <= (Init["TOL"]["ϵ_v"])^(1/2)]
+        y_θ = [y[i] for i in 1:length(y) if abs(x[i] - Init["INPUT"]["θ"]) <= (Init["TOL"]["ϵ_v"])^(1/2)]
+        θ = rad2deg(Init["INPUT"]["θ"])
+        rv = Init["INPUT"]["rv"]
+        plot(x, y,  xlabel = "α [rad]", ylabel = "y(α)", label = Init["INPUT"]["MODELO"])
+        plot!(x, y, label = "θ = $θ")
+        plot!(x, y, label = "Rc = $rv")
+
+        scatter!(x_half, y_half, color=:red, marker=:utriangle, label = "Half-life")
+
+        scatter!(x_θ, y_θ, color=:green, marker=:star, label="Ignition")
+
+        return display(current())
+    end
 end
 
 function TABLES(Init::Dict, Init2 = nothing, Init3 = nothing, Init4 = nothing)
