@@ -2,7 +2,7 @@ using IdealGasLib
 
 function Init_Parameters(;r_LR = 3.7, r_compr = 14, Vol_des = 1667e-6, n_cil = 6, θ_ign = -0.005, Δt_comb = nothing, 
     rD_S = 1, N_motor = 2000, q_ent = 1000, α_minimo = -180, α_maximo = 180, α = 0.1, Tadm = 30, Padm = P_()().val, 
-    Fluido = "C4H10", ϕ = 0.0, Half_lifes = 7, MODELOS = "FTAS", COND = "c", Y_FRAC = "iK", Rev = "R", Validation = "OFF", aKIgn = "ON")
+    Fluido = "C4H10", ϕ = 0.0, Half_lifes = 7, MODELOS = "FTAS", COND = "c", Y_FRAC = "iK", Rev = "R", Validation = "OFF", aKIgn = "ON", Open = false)
     InitialData = Dict{String, Any}()
     InitialData["r_LR"] = r_LR
     InitialData["r_compr"] = r_compr
@@ -28,6 +28,7 @@ function Init_Parameters(;r_LR = 3.7, r_compr = 14, Vol_des = 1667e-6, n_cil = 6
     InitialData["Validation"] = Validation
     InitialData["Reversible"] = Rev
     InitialData["aKIgnS"] = aKIgn
+    InitialData["Open"] = Open
 
     if InitialData["MODELOS"] == "FTHA" && InitialData["Δt_comb"] == nothing
         @warn "FTHA doesn't work with combustion duration time equals nothing. Change Δt_comb to a Float!"

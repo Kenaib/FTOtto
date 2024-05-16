@@ -22,7 +22,9 @@ function Initialization(InitialData::Dict, ϵ)
     "REVERSIBILITY" => InitialData["Reversible"],
     "Malha" => InitialData["α"],
     "aKIgn" => InitialData["aKIgnS"],
-    "HaL" => InitialData["Half_lifes"]
+    "HaL" => InitialData["Half_lifes"],
+    "Open" => InitialData["Open"]
+
     )
     #Parâmetros geométricos: 
     DATA["Vdu"] = DATA["Vd"]/DATA["z"]
@@ -138,6 +140,16 @@ function Initialization(InitialData::Dict, ϵ)
         DATA["m_R"] = DATA["VPMI"]/DATA["v_adm_R"]().val
         SIMUL["𝕧"] = Float64[ 𝕍(i)/DATA["m_R"] for i in SIMUL["𝕩"] ]
         push!(SIMUL["u"], DATA["PROPS"][DATA["FLUID"]][3]*DATA["T_adm"])
+    end
+    
+    if DATA["Open"] == true
+        SIMUL["P"][1] *= 0.9
+        DATA["IN_V"] = Float64[SIMUL["α"][i] >= DATA["α_min"] && SIMUL["α"][i] <= DATA["α_min"] + π ? 1 : 0 for i in 1:length(SIMUL["α"])]
+        DATA["OUT_V"] = Float64[SIMUL["α"][i] >= DATA["α_max"] - π && SIMUL["α"][i] <= DATA["α_max"] ? 1 : 0 for i in 1:length(SIMUL["α"])]
+        SIMUL["h_flow"] = Float64[cp(DATA["FLUID"]["MIXTURE"], MA)().val*DATA["T_adm"]] 
+        DATA["ss"] = Float64[sqrt(DATA["FLUID"]["γ_Ap"] * R_()().val/DATA["FLUID"]["MM_Ap"] * DATA["T_adm"])]
+        DATA["m_flow"] = Float64[DATA["ss"][1]*π*(15e-3)^2/4*1/DATA["v_adm_R"]().val*SIMUL["Δ𝕥"][1]]
+        DATA["m_syst"] = Float64[DATA["FLUID"]["m_R"]]
     end
     return Dict{String, Any}(
     "INPUT" => DATA,
