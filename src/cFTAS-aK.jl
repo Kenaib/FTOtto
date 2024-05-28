@@ -29,6 +29,7 @@ function cFTASak(Init::Dict)
             T_ii  = Float64[]
             P_ii = Float64[]
             u_ii = Float64[]
+            F_ii = Float64[]
             push!(n_ii, Init["INPUT"]["FLUID"]["γ_Ap"])
             push!(w_ii, work(Init["SIMUL"]["P"][i], Init["SIMUL"]["𝕧"][i], n_ii[end], Init["SIMUL"]["𝕧"][i+1])) 
             push!(y_iii, y_alpha(Init, Init["SIMUL"]["α"][i], F_Conc_i = Init["SIMUL"]["𝔽"][i]))
@@ -52,8 +53,13 @@ function cFTASak(Init::Dict)
             push!(Init["SIMUL"]["u"], u_ii[end])
             push!(Init["SIMUL"]["T"], T_ii[end])
             push!(Init["SIMUL"]["P"], P_ii[end])
-            push!(Init["SIMUL"]["𝔽"], chem_time(Init, i, IgnStart = Init["INPUT"]["aKIgn"]))
+            push!(F_ii, chem_time(Init, i, IgnStart = Init["INPUT"]["aKIgn"]))
             
+            if F_ii[end] <= Init["SIMUL"]["𝔽"][i]
+                push!(Init["SIMUL"]["𝔽"], chem_time(Init, i, IgnStart = Init["INPUT"]["aKIgn"]))
+            else
+                push!(Init["SIMUL"]["𝔽"], minimum(Init["SIMUL"]["𝔽"]))
+            end
         end
     
     end

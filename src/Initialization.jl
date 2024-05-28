@@ -1,6 +1,6 @@
 using IdealGasLib
 
-function Initialization(InitialData::Dict, ϵ)  
+function Initialization(InitialData::Dict, ϵ = FTOtto.ϵ)  
     #Dados de entrada
     DATA = Dict{String, Any}(
     "rLR" => InitialData["r_LR"],

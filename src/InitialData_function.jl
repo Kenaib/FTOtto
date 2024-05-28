@@ -31,7 +31,7 @@ function Init_Parameters(;r_LR = 3.7, r_compr = 14, Vol_des = 1667e-6, n_cil = 6
     InitialData["Open"] = Open
 
     if InitialData["MODELOS"] == "FTHA" && InitialData["Δt_comb"] == nothing
-        @warn "FTHA doesn't work with combustion duration time equals nothing. Change Δt_comb to a Float!"
+        @error "FTHA doesn't work with combustion duration time equals nothing. Change Δt_comb to a Float!"
     end
 
     if InitialData["MODELOS"] != "FTHA" && InitialData["Δt_comb"] != nothing
