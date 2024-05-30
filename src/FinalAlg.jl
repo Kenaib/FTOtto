@@ -69,7 +69,7 @@ function ThermoPlots(Init::Dict, PlotType, Init2 = nothing)
         x_θ = [x[i] for i in 1:length(x) if abs(x[i] - Init["INPUT"]["θ"]) <= (Init["TOL"]["ϵ_v"])^(1/2)]
         y_θ = [y[i] for i in 1:length(y) if abs(x[i] - Init["INPUT"]["θ"]) <= (Init["TOL"]["ϵ_v"])^(1/2)]
         
-        d = plot(x, y,  xlabel = "α [rad]", ylabel = "y(α)", label = Init["INPUT"]["MODELO"])
+        d = plot(x, y,  xlabel = "α [rad]", ylabel = "y(α)", label = Init["INPUT"]["MODELO"]*"-IK")
         
         scatter!(d, x_half, y_half, color=:red, marker=:utriangle, label = "Half-life")
 
@@ -83,9 +83,9 @@ function ThermoPlots(Init::Dict, PlotType, Init2 = nothing)
 
             x1_half = [x1[findmin(abs.(y1 .- i))[2]] for i in y1_half]
 
-            e = plot!(d, x1, y1,  xlabel = "α [rad]", ylabel = "y(α)", label = Init2["INPUT"]["MODELO"])
+            e = plot!(d, x1, y1,  xlabel = "α [rad]", ylabel = "y(α)", label = Init2["INPUT"]["MODELO"]*"-AK")
 
-            #scatter!(e, x1_half, y1_half, color=:violet, marker=:utriangle, label = "Half-life")
+            scatter!(e, x1_half, y1_half, color=:red, marker=:utriangle, label = "")
 
             return e
         end

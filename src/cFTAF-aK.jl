@@ -10,6 +10,7 @@ function cFTAFak(Init::Dict)
     y_iii = Float64[0]
     for i in 1:length(Init["SIMUL"]["α"])-1
         if abs(Init["SIMUL"]["𝕍"][i] - Init["SIMUL"]["𝕍"][i+1]) <= Init["TOL"]["ϵ_v"] #Condição isocórica.
+            F_iii = []
             push!(y_iii, y_alpha(Init, Init["SIMUL"]["α"][i], F_Conc_i = Init["SIMUL"]["𝔽"][i]))
             q_iii = [Q_j(Init, y_iii[i+1], y_iii[i]) for i in 1:length(y_iii)-1]
             Cv_i = [Cv_m(Init, y_iii[i+1]) for i in 1:length(y_iii)-1]
@@ -18,7 +19,12 @@ function cFTAFak(Init::Dict)
             push!(Init["SIMUL"]["u"], u_esp_ii(Init["SIMUL"]["u"][end], q_iii[i]))
             push!(Init["SIMUL"]["T"], T_Arc(Init["SIMUL"]["u"][end], Cv_i[i]))
             push!(Init["SIMUL"]["P"], P_Arc(Init, y_iii[i+1], Init["SIMUL"]["T"][end], Init["SIMUL"]["𝕍"][i]))
-            push!(Init["SIMUL"]["𝔽"], chem_time(Init, i, IgnStart = Init["INPUT"]["aKIgn"]))
+            push!(F_iii, chem_time(Init, i, IgnStart = Init["INPUT"]["aKIgn"]))
+            if F_iii[end] <= Init["SIMUL"]["𝔽"][i]
+                push!(Init["SIMUL"]["𝔽"], chem_time(Init, i, IgnStart = Init["INPUT"]["aKIgn"]))
+            else
+                push!(Init["SIMUL"]["𝔽"], minimum(Init["SIMUL"]["𝔽"]))
+            end
             push!(Init["SIMUL"]["w"], 0)
             push!(Init["SIMUL"]["n"], 0)
         else
@@ -55,7 +61,7 @@ function cFTAFak(Init::Dict)
             push!(Init["SIMUL"]["T"], T_ii[end])
             push!(Init["SIMUL"]["P"], P_ii[end])
             push!(F_ii, chem_time(Init, i, IgnStart = Init["INPUT"]["aKIgn"]))
-            
+
             if F_ii[end] <= Init["SIMUL"]["𝔽"][i]
                 push!(Init["SIMUL"]["𝔽"], chem_time(Init, i, IgnStart = Init["INPUT"]["aKIgn"]))
             else

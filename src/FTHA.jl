@@ -8,7 +8,7 @@ function FTHA(Init::Dict)
             if abs(Init["SIMUL"]["𝕧"][i] - Init["SIMUL"]["𝕧"][i+1]) <= Init["TOL"]["ϵ_v"]
                 push!(Init["SIMUL"]["u"], u_esp_ii(u_T(Init, Init["SIMUL"]["T"][i]), q_iii[i])) #ERRO!
                 push!(Init["SIMUL"]["T"], temp_u_FTHA(Init, Init["SIMUL"]["u"][end], Init["SIMUL"]["u"][end-1], Init["SIMUL"]["T"][end]))
-                push!(Init["SIMUL"]["P"], press_u_FTHA(Init, Init["SIMUL"]["T"][end], Init["SIMUL"]["𝕧"][i]))
+                push!(Init["SIMUL"]["P"], press_u_FTHA(Init, Init["SIMUL"]["T"][end], Init["SIMUL"]["𝕧"][i+1]))
                 push!(Init["SIMUL"]["n"], 0)
                 push!(Init["SIMUL"]["w"], 0)
                 push!(Init["SIMUL"]["y"], y_iii[i])
@@ -29,7 +29,7 @@ function FTHA(Init::Dict)
 
                     push!(u_ii, u_esp_iii(Init["SIMUL"]["u"][i], q_iii[i], w_ii[end]))
                     push!(T_ii, temp_u_FTHA(Init, u_ii[end], Init["SIMUL"]["u"][i], Init["SIMUL"]["T"][i]))
-                    push!(P_ii, press_u_FTHA(Init, T_ii[end], Init["SIMUL"]["𝕧"][i]))
+                    push!(P_ii, press_u_FTHA(Init, T_ii[end], Init["SIMUL"]["𝕧"][i+1]))
                     push!(n_ii, poli_exp(Init["SIMUL"]["P"][i], P_ii[end], Init["SIMUL"]["𝕧"][i], Init["SIMUL"]["𝕧"][i+1]))
                     j+=1
                     push!(w_ii, work(Init["SIMUL"]["P"][i], Init["SIMUL"]["𝕧"][i], n_ii[end], Init["SIMUL"]["𝕧"][i+1]))

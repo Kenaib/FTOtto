@@ -52,7 +52,7 @@ function y_FTHA(alpha, delta, theta)
     if alpha < theta
         return 0
     elseif alpha >= theta && alpha < theta + delta
-        return 1 - 1/2^(7/delta*(alpha - theta))
+        return 1 - 1/2^(10/delta*(alpha - theta))
     elseif alpha >= theta + delta
         return 1
     end
