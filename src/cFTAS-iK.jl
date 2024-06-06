@@ -22,7 +22,7 @@ function cFTASik(Init::Dict)
             push!(Init["SIMUL"]["q"], q_iii[i])
             push!(Init["SIMUL"]["u"], u_esp_ii(Init["SIMUL"]["u"][end], q_iii[i]))
             push!(Init["SIMUL"]["T"], temp_u(Init, Init["SIMUL"]["u"][end], Init["SIMUL"]["u"][end-1], Init["SIMUL"]["T"][end]))
-            push!(Init["SIMUL"]["P"], press_u(Init, Init["SIMUL"]["T"][end], Init["SIMUL"]["𝕧"][i]))
+            push!(Init["SIMUL"]["P"], press_u(Init, Init["SIMUL"]["T"][end], Init["SIMUL"]["𝕧"][i+1]))
             push!(Init["SIMUL"]["w"], 0)
             push!(Init["SIMUL"]["n"], 0)
         else
@@ -48,7 +48,7 @@ function cFTASik(Init::Dict)
 
                 push!(u_ii, u_esp_iii(Init["SIMUL"]["u"][i], q_iii[i], w_ii[end]))
                 push!(T_ii, temp_u(Init, u_ii[end], Init["SIMUL"]["u"][i], Init["SIMUL"]["T"][i]))
-                push!(P_ii, press_u(Init, T_ii[end], Init["SIMUL"]["𝕧"][i]))
+                push!(P_ii, press_u(Init, T_ii[end], Init["SIMUL"]["𝕧"][i+1]))
                 push!(n_ii, poli_exp(Init["SIMUL"]["P"][i], P_ii[end], Init["SIMUL"]["𝕧"][i], Init["SIMUL"]["𝕧"][i+1]))
                 j+=1
                 push!(w_ii, work(Init["SIMUL"]["P"][i], Init["SIMUL"]["𝕧"][i], n_ii[end], Init["SIMUL"]["𝕧"][i+1]))

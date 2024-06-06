@@ -1,23 +1,38 @@
 using .FTOtto
 using Plots
+using Printf
 
-A = FTOtto.Init_Parameters(r_compr = 21, MODELOS = "FTAS", Δt_comb = nothing, Fluido = "O2", ϕ = 0.001, Half_lifes = 7)
+X = FTOtto.Init_Parameters(r_compr = 16, MODELOS = "FTHA", Fluido = "O2", ϕ = 0.01, Half_lifes = 10, Y_FRAC = "iK", α = 0.05, q_ent = 1000, Δt_comb = 0.0055)
 
-B = FTOtto.Initialization(A, FTOtto.ϵ)
+Y = FTOtto.Initialization(X, FTOtto.ϵ)
 
-FTOtto.cFTASik(B)
+FTOtto.FTHA(Y)
 
-print(FTOtto.RESULTS(B, TABLE = "ON"))
+FTASik = FTOtto.RESULTS(Y)
 
-D = FTOtto.Init_Parameters(r_compr = 21, MODELOS = "FTHA", Δt_comb = 1.9266622625233304e-5, Fluido = "O2")
+X1 = FTOtto.Init_Parameters(r_compr = 16, MODELOS = "FTAS", Fluido = "C4H10",  ϕ = 0.001, Half_lifes = 10, Y_FRAC = "aK", α = 0.05, q_ent = 1000)
 
-E = FTOtto.Initialization(D, FTOtto.ϵ)
+Y1 = FTOtto.Initialization(X1)
 
-FTOtto.FTHA(E)
+FTOtto.cFTASak(Y1)
 
-print(FTOtto.RESULTS(E, TABLE = "ON"))
+FTASak = FTOtto.RESULTS(Y1)
 
-#FTOtto.SAVE_SIM(Init_Data = A, Results = B, Name = (r_compr = 21, MODELOS = "FTAS", Δt_comb = nothing, Fluido = "O2", ϕ = 0.001, Final_Conc = 1/128))
-#FTOtto.SAVE_SIM(Init_Data = D, Results = E, Name = (r_compr = 21, MODELOS = "FTHA", Δt_comb = 1.9266622625233304e-5, Fluido = "O2"))
+FTOtto.TABLES(FTASik)
+FTOtto.TABLES(FTASak)
 
-FTOtto.SAVE_PLOTS(Plot_name = "P-v", Plot = FTOtto.ThermoPlots(E, "P-v", B))
+Δt_FTASik = Y["INPUT"]["Δt_c"]
+ntSI = FTASik["η_t"]*100
+Δt_FTASak = Y1["INPUT"]["Δt_c"]
+ntSA = FTASak["η_t"]*100
+
+#Sem eficiência térmica: 
+
+a = plot(Y["SIMUL"]["𝕧"], Y["SIMUL"]["T"], xlabel = "v [m³/kg]", ylabel = "y(α)", label = "FTAS-IK", legend=:outertopright)
+plot!(a, Y1["SIMUL"]["𝕧"], Y1["SIMUL"]["T"], label = "FTAF-IK")
+savefig(a, "teste")
+
+#Com eficiência térmica: 
+#a = plot(Y["SIMUL"]["𝕧"], Y["SIMUL"]["T"], xlabel = "v [m³/kg]", ylabel = "T [K] ", label = "FTAS-IK, Δt_c = "* @sprintf("%.7f", Δt_FTASik) * " s; η = " * @sprintf("%.2f", ntSI) * "%")
+#plot!(a, Y1["SIMUL"]["𝕧"], Y1["SIMUL"]["T"], label = "FTAS-AK, Δt_c = "* @sprintf("%.7f", Δt_FTASak) * " s; η = " * @sprintf("%.2f", ntSA) * "%")
+#savefig(a, "CNTrv=16T-v-FTAS-IK-FTAS-AK.png")
