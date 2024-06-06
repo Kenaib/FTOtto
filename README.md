@@ -1,3 +1,9 @@
 # FTOtto
 
-[![Build Status](https://github.com/Kenaib/FTOtto.jl/actions/workflows/CI.yml/badge.svg?branch=master)](https://github.com/Kenaib/FTOtto.jl/actions/workflows/CI.yml?query=branch%3Amaster)
+A Beau de Rochas' gas cycle with chemical kinetics package.
+
+Work in progress.
+
+Future improvements include:
+
+Reduced chemical kinetics mechanism for combustion of some saturated hydrocarbons and insaturated hydrocarbons. Development of an open system Beau de Rochas' cycle. Analysis of irreversibilities effects on the gas cycle.
