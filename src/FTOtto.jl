@@ -51,11 +51,4 @@ include("cFTAF-aK.jl")
 
 include("FinalAlg.jl")
 
-###Testes
-
-include("CodeTests.jl")
-include("Teste_chem_time.jl")
-include("Teste_chem_time_aK.jl")
-include("Testes_OPEN.jl")
-
 end
