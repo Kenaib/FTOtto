@@ -31,7 +31,17 @@ function RESULTS(Init::Dict)
     MAIN_RESULTS["w_net"] = MAIN_RESULTS["w_out"] - MAIN_RESULTS["w_in"]
     MAIN_RESULTS["η_t"] = MAIN_RESULTS["w_net"]/MAIN_RESULTS["q_in"]
     MAIN_RESULTS["rct"] = MAIN_RESULTS["w_in"]/MAIN_RESULTS["w_out"]
-    
+    ###\eta = \eta_c * \eta_t
+    for i in 1:length(Init["SIMUL"]["α"])
+        if abs(Init["SIMUL"]["α"][i] - π) <= (Init["TOL"]["ϵ_v"])^(1/2) #Abertura da válvula de exaustão.
+            if Init["INPUT"]["Y_FRAC"] == "iK"
+                MAIN_RESULTS["η_c"] = 1 - Init["SIMUL"]["𝔽_ik"][i]/Init["SIMUL"]["𝔽_ik"][1]
+            else
+                MAIN_RESULTS["η_c"] = 1 - Init["SIMUL"]["𝔽"][i]/Init["SIMUL"]["𝔽"][1]
+            end
+        end
+    end
+    MAIN_RESULTS["η"] = MAIN_RESULTS["η_c"] * MAIN_RESULTS["η_t"]
     return MAIN_RESULTS
 
 end
@@ -95,7 +105,7 @@ end
 
 function TABLES(Init::Dict, Init2 = nothing, Init3 = nothing, Init4 = nothing)
    
-    df = DataFrame(PARAMS = ["Eficiência térmica de primeira Lei", "Calor que entra", "Trabalho líquido", "Razão de consumo de trabalho", "Tempo de combustão"])
+    df = DataFrame(PARAMS = ["Eficiência térmica de primeira Lei", "Calor que entra", "Trabalho líquido", "Razão de consumo de trabalho", "Tempo de combustão", "Duração angular de combustão", "Eficiência de combustão", "Eficiência total"])
 
     
     inputs = [(Init, :B), (Init2, :C), (Init3, :D), (Init4, :E)]
@@ -103,7 +113,7 @@ function TABLES(Init::Dict, Init2 = nothing, Init3 = nothing, Init4 = nothing)
     for (input, col_name) in inputs
 
         if !isnothing(input)
-            df[!, col_name] = [input["η_t"]*100, input["q_in"], input["w_net"], input["rct"]*100, input["DATA"]["Δt_c"]]
+            df[!, col_name] = [input["η_t"]*100, input["q_in"], input["w_net"], input["rct"]*100, input["DATA"]["Δt_c"], rad2deg(input["DATA"]["δ"]), input["η_c"]*100, input["η"]*100]
             rename!(df, col_name => input["DATA"]["MODELO"] * (input["DATA"]["MODELO"] == "FTHA" ? "" : "-" * input["DATA"]["Y_FRAC"]))
         end
 
