@@ -12,7 +12,7 @@ end
 
 #### Interação de trabalho fornecido ao sistema.
 
-function work(Pi, vi, ni, vii, ev=sqrt(ϵ[1]))
+function work(Pi, vi, ni, vii, ev=sqrt(ϵ[1])*10^(-3))
     if abs(vii - vi) <= ev  # Condição isocórica.
         return 0
     elseif abs(ni - 1) <= ev

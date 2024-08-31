@@ -23,7 +23,8 @@ function Initialization(InitialData::Dict, ϵ = FTOtto.ϵ)
     "Malha" => InitialData["α"],
     "aKIgn" => InitialData["aKIgnS"],
     "HaL" => InitialData["Half_lifes"],
-    "Open" => InitialData["Open"]
+    "Open" => InitialData["Open"],
+    "Teste" => InitialData["Teste"],
 
     )
     #Parâmetros geométricos: 
@@ -43,15 +44,17 @@ function Initialization(InitialData::Dict, ϵ = FTOtto.ϵ)
     #Inicializa a simulação: 
     SIMUL = Dict{String, Any}(
         "α" => Float64[(DATA["α_min"]:DATA["Malha"]:DATA["α_max"])...],
-        "𝔽" => Float64[],
-        "𝕆" => Float64[],
+        "𝔽_ik" => Float64[],
+        "𝔽" => [],
+        "𝕆" => [],
         "u" => Float64[],
         "T" => Float64[],
         "P" => Float64[],
         "q" => Float64[],
         "y" => Float64[],
         "n" => Float64[],
-        "w" => Float64[], 
+        "w" => Float64[],
+        "t_teste" => [],
     )
     SIMUL["Δ𝕥"] = Float64[(SIMUL["α"][2] - SIMUL["α"][1])/DATA["ω"] for i in 1:length(SIMUL["α"])]
     𝕩(α) = x_pistao(α, DATA["L"], DATA["R"])

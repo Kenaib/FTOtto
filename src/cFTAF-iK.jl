@@ -9,7 +9,7 @@ function cFTAFik(Init::Dict)
 
     y_iii = Float64[0]
     for i in 1:length(Init["SIMUL"]["α"])-1
-        if abs(Init["SIMUL"]["𝕍"][i] - Init["SIMUL"]["𝕍"][i+1]) <= Init["TOL"]["ϵ_v"] #Condição isocórica.
+        if abs(Init["SIMUL"]["𝕍"][i] - Init["SIMUL"]["𝕍"][i+1]) <= Init["TOL"]["ϵ_v"]*10^(-3) #Condição isocórica.
             if abs(Init["SIMUL"]["α"][i] - Init["INPUT"]["θ"]) >= (Init["TOL"]["ϵ_v"])^(1/2) || Init["INPUT"]["Δt_c"] != nothing
                 push!(y_iii, y_alpha(Init, Init["SIMUL"]["α"][i]))
             elseif abs(Init["SIMUL"]["α"][i] - Init["INPUT"]["θ"]) <= (Init["TOL"]["ϵ_v"])^(1/2)
@@ -66,6 +66,11 @@ function cFTAFik(Init::Dict)
         end
         
     end
+
+    while length(Init["SIMUL"]["𝔽_ik"]) < length(Init["SIMUL"]["α"])
+        push!(Init["SIMUL"]["𝔽_ik"], Init["SIMUL"]["𝔽_ik"][end])
+    end
+    
 end
 
 #Já validado!

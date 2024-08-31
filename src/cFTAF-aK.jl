@@ -9,7 +9,7 @@ function cFTAFak(Init::Dict)
 
     y_iii = Float64[0]
     for i in 1:length(Init["SIMUL"]["α"])-1
-        if abs(Init["SIMUL"]["𝕍"][i] - Init["SIMUL"]["𝕍"][i+1]) <= Init["TOL"]["ϵ_v"] #Condição isocórica.
+        if abs(Init["SIMUL"]["𝕍"][i] - Init["SIMUL"]["𝕍"][i+1]) <= Init["TOL"]["ϵ_v"]*1e-3 #Condição isocórica.
             F_iii = []
             push!(y_iii, y_alpha(Init, Init["SIMUL"]["α"][i], F_Conc_i = Init["SIMUL"]["𝔽"][i]))
             q_iii = [Q_j(Init, y_iii[i+1], y_iii[i]) for i in 1:length(y_iii)-1]
@@ -74,8 +74,10 @@ function cFTAFak(Init::Dict)
 
     if chem_time(Init, 1, aKConc = "OFF", IgnStart = Init["INPUT"]["aKIgn"]) == nothing
         Init["INPUT"]["Δt_c"] = 0
+        Init["INPUT"]["δ"] = Init["INPUT"]["ω"] * Init["INPUT"]["Δt_c"]
     else
         Init["INPUT"]["Δt_c"] = chem_time(Init, 1, aKConc = "OFF", IgnStart = Init["INPUT"]["aKIgn"])
+        Init["INPUT"]["δ"] = Init["INPUT"]["ω"] * Init["INPUT"]["Δt_c"]
     end
 
 end

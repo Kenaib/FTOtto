@@ -66,8 +66,10 @@ function cFTASak(Init::Dict)
 
     if chem_time(Init, 1, aKConc = "OFF", IgnStart = Init["INPUT"]["aKIgn"]) == nothing
         Init["INPUT"]["Δt_c"] = 0
+        Init["INPUT"]["δ"] = Init["INPUT"]["ω"] * Init["INPUT"]["Δt_c"]
     else
         Init["INPUT"]["Δt_c"] = chem_time(Init, 1, aKConc = "OFF", IgnStart = Init["INPUT"]["aKIgn"])
+        Init["INPUT"]["δ"] = Init["INPUT"]["ω"] * Init["INPUT"]["Δt_c"]
     end
 
 end

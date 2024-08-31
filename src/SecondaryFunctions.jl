@@ -35,12 +35,14 @@ function y_alpha(Init:: Dict, alpha; F_Conc_i = 0)
     if Init["INPUT"]["Y_FRAC"] == "iK"
         if alpha < theta
             return 0
-        elseif Δt != nothing 
+        elseif Δt != nothing && Init["INPUT"]["Teste"] == false
             if alpha >= theta && alpha <= theta + delta
                 return 1 - 1/2^(HL/delta*(alpha - theta))
             elseif alpha >= theta + delta
                 return 1
             end
+        elseif Δt != nothing && Init["INPUT"]["Teste"] == true
+            return 1 - 1/2^(HL/delta*(alpha - theta))
         end
     elseif Init["INPUT"]["Y_FRAC"] == "aK"
         return (F_Conc_0 - F_Conc_i)/F_Conc_0

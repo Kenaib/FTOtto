@@ -13,12 +13,17 @@ function chem_time(Init::Dict, w; aKConc = "ON", IgnStart = "OFF")
     
     if Init["INPUT"]["Y_FRAC"] == "iK"
 
+        for i in 1:w
+            push!(Init["SIMUL"]["𝔽_ik"], Init["SIMUL"]["𝔽"][1])
+        end
         T = Init["SIMUL"]["T"][w]
         x(F, p, t) = -A*exp(-EaRu/T)*F^m*(O0 - 1/(λ*ϕ)*(F0 - F))^n
         tspan = (0, 1/(Init["INPUT"]["N"]/60))
         OBJ = Init["INPUT"]["FLUID"]["[F]_f"]
-        sol = solve(ODEProblem(x, F0, tspan), Rodas4P(), abstol=1e-16, reltol=1e-16)
-        
+        sol = solve(ODEProblem(x, F0, tspan), Rodas4P(), abstol=1e-16, reltol=1e-16, saveat = Δt[1])
+        for i in 1:[i for i in 1:length(sol.u) if abs(sol.u[i] - OBJ) <= 1e-6][1]-1    
+            push!(Init["SIMUL"]["𝔽_ik"], sol.u[i+1])
+        end
         return [sol.t[i] for i in 1:length(sol.u) if abs(sol.u[i] - OBJ) <= 1e-6][1] #Retorna o tempo mínimo que satisfaz a condição.
     
     elseif Init["INPUT"]["Y_FRAC"] == "aK"
