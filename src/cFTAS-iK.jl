@@ -65,6 +65,11 @@ function cFTASik(Init::Dict)
 
         end
     end
+
+    while length(Init["SIMUL"]["𝔽_ik"]) < length(Init["SIMUL"]["α"])
+        push!(Init["SIMUL"]["𝔽_ik"], Init["SIMUL"]["𝔽_ik"][end])
+    end
+
 end
 
 #Validado contra o FTHA!
