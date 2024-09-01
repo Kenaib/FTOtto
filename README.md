@@ -5,7 +5,7 @@ kinetics schemes.
 
 ## Version
 
-This is `FTOtto-0.1.1`. This is the first version to properly work from the repository.
+This is `FTOtto-0.1.2`. This version avoids assigning `nothing` to simulation parameters.
 
 ## Installation
 
