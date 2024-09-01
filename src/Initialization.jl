@@ -39,7 +39,7 @@ function Initialization(InitialData::Dict, ϵ = FTOtto.ϵ)
     if DATA["Δt_c"] != nothing
         DATA["δ"] = DATA["ω"] * DATA["Δt_c"]
     elseif DATA["Δt_c"] == nothing
-        DATA["δ"] = nothing
+        DATA["δ"] = 0.0
     end
     #Inicializa a simulação: 
     SIMUL = Dict{String, Any}(
