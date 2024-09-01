@@ -42,7 +42,7 @@ function chem_time(Init::Dict, w; aKConc = "ON", IgnStart = "OFF")
                 
                 if New_Conc <= Init["INPUT"]["FLUID"]["[F]_f"] || Init["SIMUL"]["𝔽"][w] == 0
 
-                    return 0
+                    return 0.0
 
                 else
 
@@ -70,7 +70,7 @@ function chem_time(Init::Dict, w; aKConc = "ON", IgnStart = "OFF")
                     
                     if New_Conc <= Init["INPUT"]["FLUID"]["[F]_f"] || Init["SIMUL"]["𝔽"][w] == 0
 
-                        return 0
+                        return 0.0
 
                     else
 
@@ -93,5 +93,7 @@ function chem_time(Init::Dict, w; aKConc = "ON", IgnStart = "OFF")
         end
 
     end
+
+    return 0.0  # as to avoid returning 'nothing'
 
 end
