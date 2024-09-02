@@ -1,10 +1,14 @@
 function cFTAFik(Init::Dict)
     if Init["INPUT"]["MODELO"] != "FTAF"
-        return @error "Select FTAF model!"
+        error("Select FTAF model!")
     end
 
     if Init["INPUT"]["Y_FRAC"] != "iK"
-        return @error "Select ignition chemical kinetics (iK)!"
+        error("Select ignition chemical kinetics (iK)!")
+    end
+
+    if Init["INPUT"]["Open"] == true
+        error("Select closed system model!")
     end
 
     y_iii = Float64[0]

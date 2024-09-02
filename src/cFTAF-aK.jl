@@ -1,12 +1,16 @@
 function cFTAFak(Init::Dict)
     if Init["INPUT"]["MODELO"] != "FTAF"
-        return @error "Select FTAF model!"
+        error("Select FTAF model!")
     end
 
     if Init["INPUT"]["Y_FRAC"] != "aK"
-        return @error "Select adjustable chemical kinetics (iK)!"
+        error("Select adjustable chemical kinetics (iK)!")
     end
 
+    if Init["INPUT"]["Open"] == true
+        error("Select closed system model!")
+    end
+    
     y_iii = Float64[0]
     for i in 1:length(Init["SIMUL"]["α"])-1
         if abs(Init["SIMUL"]["𝕍"][i] - Init["SIMUL"]["𝕍"][i+1]) <= Init["TOL"]["ϵ_v"]*1e-3 #Condição isocórica.

@@ -1,6 +1,6 @@
 function FTHA(Init::Dict)
     if Init["INPUT"]["MODELO"] != "FTHA"
-        return @error "Select FTAF model!"
+        error("Select FTHA model!")
     else
         y_iii = [y_FTHA(Init["SIMUL"]["α"][i], Init["INPUT"]["δ"], Init["INPUT"]["θ"]) for i in 1:length(Init["SIMUL"]["α"])]
         q_iii = [q_in_i(Init["INPUT"]["q_in"], y_iii[i+1], y_iii[i]) for i in 1:length(y_iii)-1]
