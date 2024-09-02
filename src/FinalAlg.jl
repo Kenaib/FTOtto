@@ -33,15 +33,17 @@ function RESULTS(Init::Dict)
     MAIN_RESULTS["rct"] = MAIN_RESULTS["w_in"]/MAIN_RESULTS["w_out"]
     ###\eta = \eta_c * \eta_t
     for i in 1:length(Init["SIMUL"]["α"])
+
         if abs(Init["SIMUL"]["α"][i] - π) <= (Init["TOL"]["ϵ_v"])^(1/2) #Abertura da válvula de exaustão.
-            if Init["INPUT"]["Y_FRAC"] == "iK"
-                MAIN_RESULTS["η_c"] = 1 - Init["SIMUL"]["𝔽_ik"][i]/Init["SIMUL"]["𝔽_ik"][1]
-            else
-                MAIN_RESULTS["η_c"] = 1 - Init["SIMUL"]["𝔽"][i]/Init["SIMUL"]["𝔽"][1]
-            end
+    
+            MAIN_RESULTS["η_c"] = 1 - Init["SIMUL"]["𝔽"][i]/Init["SIMUL"]["𝔽"][1]
+            
         end
+    
     end
+
     MAIN_RESULTS["η"] = MAIN_RESULTS["η_c"] * MAIN_RESULTS["η_t"]
+    
     return MAIN_RESULTS
 
 end
