@@ -32,14 +32,22 @@ function RESULTS(Init::Dict)
     MAIN_RESULTS["η_t"] = MAIN_RESULTS["w_net"]/MAIN_RESULTS["q_in"]
     MAIN_RESULTS["rct"] = MAIN_RESULTS["w_in"]/MAIN_RESULTS["w_out"]
     ###\eta = \eta_c * \eta_t
-    for i in 1:length(Init["SIMUL"]["α"])
+    if Init["INPUT"]["MODELO"] != "FTHA"
 
-        if abs(Init["SIMUL"]["α"][i] - π) <= (Init["TOL"]["ϵ_v"])^(1/2) #Abertura da válvula de exaustão.
-    
-            MAIN_RESULTS["η_c"] = 1 - Init["SIMUL"]["𝔽"][i]/Init["SIMUL"]["𝔽"][1]
-            
+        for i in 1:length(Init["SIMUL"]["α"])
+
+            if abs(Init["SIMUL"]["α"][i] - π) <= (Init["TOL"]["ϵ_v"])^(1/2) #Abertura da válvula de exaustão.
+        
+                MAIN_RESULTS["η_c"] = 1 - Init["SIMUL"]["𝔽"][i]/Init["SIMUL"]["𝔽"][1]
+                
+            end
+        
         end
-    
+
+    else
+
+        MAIN_RESULTS["η_c"] = 1
+
     end
 
     MAIN_RESULTS["η"] = MAIN_RESULTS["η_c"] * MAIN_RESULTS["η_t"]
