@@ -13,7 +13,7 @@ function cFTASik(Init::Dict)
             if abs(Init["SIMUL"]["α"][i] - Init["INPUT"]["θ"]) >= (Init["TOL"]["ϵ_v"])^(1/2) || Init["INPUT"]["Δt_c"] != nothing
                 push!(y_iii, y_alpha(Init, Init["SIMUL"]["α"][i]))
             elseif abs(Init["SIMUL"]["α"][i] - Init["INPUT"]["θ"]) <= (Init["TOL"]["ϵ_v"])^(1/2)
-                Init["INPUT"]["Δt_c"] = chem_time(Init, i)
+                Init["INPUT"]["Δt_c"] = chem_time(Init, i, CombTimeIK = "OFF")
                 Init["INPUT"]["δ"] = Init["INPUT"]["ω"] * Init["INPUT"]["Δt_c"]
                 push!(y_iii, y_alpha(Init, Init["SIMUL"]["α"][i]))
             end
@@ -36,7 +36,7 @@ function cFTASik(Init::Dict)
             if abs(Init["SIMUL"]["α"][i] - Init["INPUT"]["θ"]) >= (Init["TOL"]["ϵ_v"])^(1/2) || Init["INPUT"]["Δt_c"] != nothing
                 push!(y_iii, y_alpha(Init, Init["SIMUL"]["α"][i]))
             elseif abs(Init["SIMUL"]["α"][i] - Init["INPUT"]["θ"]) <= (Init["TOL"]["ϵ_v"])^(1/2)
-                Init["INPUT"]["Δt_c"] = chem_time(Init, i)
+                Init["INPUT"]["Δt_c"] = chem_time(Init, i, CombTimeIK = "OFF")
                 Init["INPUT"]["δ"] = Init["INPUT"]["ω"] * Init["INPUT"]["Δt_c"]
                 push!(y_iii, y_alpha(Init, Init["SIMUL"]["α"][i]))
             end
@@ -66,9 +66,9 @@ function cFTASik(Init::Dict)
         end
     end
 
-    while length(Init["SIMUL"]["𝔽_ik"]) < length(Init["SIMUL"]["α"])
-        push!(Init["SIMUL"]["𝔽_ik"], Init["SIMUL"]["𝔽_ik"][end])
-    end
+    #while length(Init["SIMUL"]["𝔽_ik"]) < length(Init["SIMUL"]["α"])
+    #    push!(Init["SIMUL"]["𝔽_ik"], Init["SIMUL"]["𝔽_ik"][end])
+    #end
 
 end
 
